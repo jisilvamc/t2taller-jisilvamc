@@ -60,6 +60,10 @@ def post_ing():
     try:
         dic = request.json
         nombre, descripcion = dic.get("nombre"), dic.get("descripcion")
+        if nombre == None or descripcion == None:
+        	return "Input invalido", 400
+        print("NOMBRE Y DESCRIPCION DE POST INGREDIENTE")
+        print(nombre, descripcion)
         cur.execute("INSERT INTO ingrediente(nombre, descripcion) VALUES ('{}', '{}');".format(nombre, descripcion))
         conn.commit()
         new_ing = cur.execute("SELECT * FROM ingrediente ORDER BY id DESC LIMIT 1;".format()).fetchall()[0]
@@ -121,6 +125,8 @@ def post_ham():
     try:
         dic = request.json
         nombre, precio, descripcion, imagen = dic.get("nombre"), dic.get("precio"), dic.get("descripcion"), dic.get("imagen")
+        if nombre == None or precio == None or descripcion == None or imagen == None:
+        	return "Input invalido", 400
         cur.execute("INSERT INTO hamburguesa(nombre, precio, descripcion, imagen) "
                     "VALUES ('{}', {}, '{}', '{}');".format(nombre, precio, descripcion, imagen))
         conn.commit()
